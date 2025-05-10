@@ -41,11 +41,11 @@ return(
     <h2 className="text-xl font-bold mb-4">Login</h2>
     <form onSubmit={handleSubmit}>
       <div className="mb-4">
-        <label className="block mb-2" htmlFor="email">Email</label>
+        <label className="block mb-2" htmlFor="email">Username</label>
         <input
-          id="email"
-          type="email"
-          name="email"
+          id="username"
+          type="text"
+          name="username"
           value={formData.username}
           onChange={handleChange}
           className="w-full px-4 py-2 border border-gray-300 rounded"
