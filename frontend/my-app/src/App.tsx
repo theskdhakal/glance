@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-      <div className="bg-red-500 text-white p-4 flex justify-center align-center">
+      <div className="min-h-screen bg-gray-500 text-white p-4 flex justify-center align-center">
         <h1> Hello there, i am back</h1>
       </div>
     </>
