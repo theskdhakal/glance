@@ -1,4 +1,5 @@
 import { useState } from "react";
+import api from "../api/api";
 
 
 
@@ -23,8 +24,8 @@ const LoginForm=()=>{
         e.preventDefault()
 
         try {
-
-            console.log('login successful')
+            const response=await api.post('/core/token',formData)
+            console.log('login successful', response.data)
             
         } catch (error) {
             console.error('login failed:',error)
