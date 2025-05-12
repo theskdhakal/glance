@@ -4,7 +4,7 @@ import { RegistrationHandler } from "../api/api";
 
 
 
-interface RegistrationData{
+export interface RegistrationData{
     email:string
     username:string;
     password:string;

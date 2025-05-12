@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { LoginHandler } from "../api/api";
 
 
 
 
-interface LoginData{
+export interface LoginData{
     username:string;
     password:string;
 
@@ -24,8 +25,8 @@ const LoginForm=()=>{
         e.preventDefault()
 
         try {
-         
-            console.log('login successful')
+           const response=await LoginHandler(formData)
+            console.log('login successful',response)
             
         } catch (error) {
             console.error('login failed:',error)
