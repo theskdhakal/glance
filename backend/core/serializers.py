@@ -2,10 +2,13 @@ from rest_framework import serializers
 from .models import Image, Like
 from django.contrib.auth.models import User
 
+
+
+
 class UserSerializers(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields=['id', 'username']
+        fields=['id', 'username', 'email']
 
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
