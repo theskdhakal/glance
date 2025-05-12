@@ -1,16 +1,18 @@
 import { useState } from "react";
+import { RegistrationHandler } from "../api/api";
 
 
 
 
-interface LoginData{
+interface RegistrationData{
+    email:string
     username:string;
     password:string;
 
 }
 
-const LoginForm=()=>{
-    const [formData,setFormData]=useState<LoginData>({username:'',password:''})
+const RegistrationForm=()=>{
+    const [formData,setFormData]=useState<RegistrationData>({username:'',password:'', email:''})
     const [error,setError]=useState<string | null>(null)
 
 
@@ -24,8 +26,8 @@ const LoginForm=()=>{
         e.preventDefault()
 
         try {
-         
-            console.log('login successful')
+            const response=await RegistrationHandler(formData)
+            console.log('login successful', response.data)
             
         } catch (error) {
             console.error('login failed:',error)
@@ -39,15 +41,27 @@ const LoginForm=()=>{
 
 return(
     <div className="w-full max-w-sm mx-auto p-6 border border-gray-300 rounded-lg">
-    <h2 className="text-xl font-bold mb-4">Login</h2>
+    <h2 className="text-xl font-bold mb-4">Register</h2>
     <form onSubmit={handleSubmit}>
       <div className="mb-4">
-        <label className="block mb-2" htmlFor="email">Username</label>
+        <label className="block mb-2" htmlFor="username">Username</label>
         <input
           id="username"
           type="text"
           name="username"
           value={formData.username}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 rounded"
+          required
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block mb-2" htmlFor="email">Email</label>
+        <input
+          id="email"
+          type="text"
+          name="email"
+          value={formData.email}
           onChange={handleChange}
           className="w-full px-4 py-2 border border-gray-300 rounded"
           required
@@ -76,4 +90,4 @@ return(
 
 }
 
-export default LoginForm
+export default RegistrationForm

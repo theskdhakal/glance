@@ -3,6 +3,7 @@
 // import viteLogo from '/vite.svg'
 import './App.css'
 import LoginForm from './components/LoginForm'
+import RegistrationForm from './components/RegistrationForm'
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -11,6 +12,7 @@ function App() {
     <>
       <div className="min-h-screen bg-gray-500 text-white p-4 flex justify-center align-center">
         <LoginForm/>
+        <RegistrationForm/>
       </div>
     </>
   )
