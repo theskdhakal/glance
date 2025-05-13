@@ -6,6 +6,7 @@ import './App.css'
 import LoginForm from './components/LoginForm'
 import RegistrationForm from './components/RegistrationForm'
 import Home from './page/Home'
+import Upload from './page/Upload'
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Home/>}/>
+        <Route path="/upload" element={<Upload/>}/>
         <Route path="/register" element={<RegistrationForm/>}/>
         <Route path="/login" element={<LoginForm/>}/>
 

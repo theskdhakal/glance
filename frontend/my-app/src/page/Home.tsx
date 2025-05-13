@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { MainLayout } from '../layout/MainLayout'
 import { Link } from 'react-router-dom';
 
-interface ImageData{
+export interface ImageData{
     id:string,
     url:string,
     description:string
