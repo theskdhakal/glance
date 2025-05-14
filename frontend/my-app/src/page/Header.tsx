@@ -5,9 +5,9 @@ export const Header = () => {
     <nav className="bg-blue-200 py-4">
       <div className="max-w-screen-xl mx-auto px-4">
         <div className="flex justify-between items-center">
-          {/* Logo or Brand */}
+        
           <div className="text-xl font-bold text-blue-800">
-            <Link to="/">MyApp</Link>
+            <Link to="/">Glance</Link>
           </div>
 
           {/* Navigation Links */}
