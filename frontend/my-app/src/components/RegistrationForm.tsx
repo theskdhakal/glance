@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { RegistrationHandler } from "../api/api";
+import { MainLayout } from "../layout/MainLayout";
 
 
 
@@ -40,6 +41,7 @@ const RegistrationForm=()=>{
 
 
 return(
+  <MainLayout>
     <div className="w-full max-w-sm mx-auto p-6 border border-gray-300 rounded-lg">
     <h2 className="text-xl font-bold mb-4">Register</h2>
     <form onSubmit={handleSubmit}>
@@ -83,6 +85,7 @@ return(
       <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded">Login</button>
     </form>
   </div>
+  </MainLayout>
 )
 
 
