@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MainLayout } from "../layout/MainLayout";
 
 
 
@@ -21,6 +22,7 @@ const Upload = () => {
   };
 
   return (
+    <MainLayout>
     <div className="max-w-screen-xl mx-auto p-4">
       <h1 className="text-3xl font-semibold mb-4">Upload Image</h1>
 
@@ -58,6 +60,7 @@ const Upload = () => {
         </button>
       </form>
     </div>
+    </MainLayout>
   );
 };
 
