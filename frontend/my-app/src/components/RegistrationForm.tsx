@@ -1,6 +1,8 @@
+'use client'
 import { useState } from "react";
 import { RegistrationHandler } from "../api/api";
 import { MainLayout } from "../layout/MainLayout";
+import {useAppDispatch} from '@/hooks'
 
 
 
@@ -13,6 +15,7 @@ export interface RegistrationData{
 }
 
 const RegistrationForm=()=>{
+   const dispatch=useAppDispatch()
     const [formData,setFormData]=useState<RegistrationData>({username:'',password:'', email:''})
     const [error,setError]=useState<string | null>(null)
 
