@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LoginHandler } from "../api/api";
+import { getUser, LoginHandler } from "../api/api";
 import { MainLayout } from "../layout/MainLayout";
 
 
@@ -27,7 +27,11 @@ const LoginForm=()=>{
 
         try {
            const response=await LoginHandler(formData)
-            console.log('login successful',response)
+            
+          if (response.status=="success"){
+            const user=await getUser()
+            console.log(user)
+          }
             
         } catch (error) {
             console.error('login failed:',error)

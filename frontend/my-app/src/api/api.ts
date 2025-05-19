@@ -27,14 +27,40 @@ export const LoginHandler=async(obj:LoginData)=>{
     try {
         const response=await axios.post(baseURL +"core/token/",obj)
 
-        console.log(response)
-        return response
+        
+  const {access, refresh}=response.data;
+
+  //store the tokens directly in local storage
+  localStorage.setItem("access_token",access);
+  localStorage.setItem("refresh_token",refresh)
+  return {status:"success"}
+  
         
     } catch (error) {
         return{
             status:"error",
             message:error
         }
+    }
+}
+
+export const getUser=async()=>{
+    const token=localStorage.getItem("access_token")
+
+    if(!token) return null;
+
+    try {
+        const res= await axios.get(baseURL+'core/login/',{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        })
+
+        return res.data
+        
+    } catch (error) {
+        console.error("failed to fetch user", error);
+        return null
     }
 }
 

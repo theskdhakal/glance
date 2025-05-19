@@ -62,3 +62,10 @@ class ToggleLike(APIView):
             return Response({'liked': False})
         return Response({'liked':True})
 
+class LoginUserView(APIView):
+    permission_classes=[permissions.IsAuthenticated]
+
+    def get(Self, request):
+        serializer=UserSerializers(request.user)
+        return Response(serializer.data)
+
