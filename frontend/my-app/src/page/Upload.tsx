@@ -1,16 +1,27 @@
 import React, { useState } from "react";
 import { MainLayout } from "../layout/MainLayout";
+import { uploadHandler } from "../api/api";
+// import { useAppSelector } from "../../hooks";
 
-
+export interface uploadData{
+  image:File,
+  title:string
+}
 
 const Upload = () => {
-  const [image, setImage] = useState(null);
-  const [description, setDescription] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+  const [title, setTitle] = useState("");
+
+  // const{user}=useAppSelector((state)=> state.user)
  
 
   // Handle file input change
-  const handleImageChange = (e:React.ChangeEvent) => {
+  const handleImageChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     
+   const file=e.target.files?.[0]
+   if(file){
+    setImage(file)
+   }
  
   };
 
@@ -18,7 +29,25 @@ const Upload = () => {
   const handleUpload = async (e:React.FormEvent) => {
     e.preventDefault();
 
+    if(!image) return;
+
+    const formData=new FormData()
+    formData.append("image",image);
+    formData.append("title",title);
+ 
+   try {
+
+    const response =await uploadHandler(formData)
+    
+   } catch (error) {
+    
+   }
   
+
+
+
+
+
   };
 
   return (
@@ -45,8 +74,8 @@ const Upload = () => {
 
         {/* Description */}
         <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           placeholder="Add a description"
           className="border p-2 w-full"
         />

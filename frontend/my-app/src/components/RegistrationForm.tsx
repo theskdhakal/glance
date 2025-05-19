@@ -2,7 +2,9 @@
 import { useState } from "react";
 import { RegistrationHandler } from "../api/api";
 import { MainLayout } from "../layout/MainLayout";
-import {useAppDispatch} from '@/hooks'
+import {useAppDispatch} from "../../hooks"
+import { setUser } from "./userSlice";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -16,6 +18,7 @@ export interface RegistrationData{
 
 const RegistrationForm=()=>{
    const dispatch=useAppDispatch()
+   const navigate=useNavigate()
     const [formData,setFormData]=useState<RegistrationData>({username:'',password:'', email:''})
     const [error,setError]=useState<string | null>(null)
 
@@ -30,8 +33,9 @@ const RegistrationForm=()=>{
         e.preventDefault()
 
         try {
-            const response=await RegistrationHandler(formData)
-            console.log('login successful', response.data)
+            const user=await RegistrationHandler(formData)
+            dispatch(setUser(user))
+            navigate("/")
             
         } catch (error) {
             console.error('login failed:',error)
