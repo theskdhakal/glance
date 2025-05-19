@@ -1,6 +1,6 @@
 'use client'
 import { useState } from "react";
-import { RegistrationHandler } from "../api/api";
+import { getUser, RegistrationHandler } from "../api/api";
 import { MainLayout } from "../layout/MainLayout";
 import {useAppDispatch} from "../../hooks"
 import { setUser } from "./userSlice";
@@ -33,9 +33,13 @@ const RegistrationForm=()=>{
         e.preventDefault()
 
         try {
-            const user=await RegistrationHandler(formData)
-            dispatch(setUser(user))
-            navigate("/")
+            const response=await RegistrationHandler(formData)
+            if(response.status=='success'){
+              const user= getUser()
+              
+                          dispatch(setUser(user))
+                          navigate("/")
+            }
             
         } catch (error) {
             console.error('login failed:',error)
@@ -89,7 +93,7 @@ return(
         />
       </div>
       {error && <p className="text-red-500 text-sm">{error}</p>}
-      <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded">Login</button>
+      <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded">Register</button>
     </form>
   </div>
   </MainLayout>

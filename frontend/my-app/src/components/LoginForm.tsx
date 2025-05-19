@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { getUser, LoginHandler } from "../api/api";
 import { MainLayout } from "../layout/MainLayout";
+import { useAppDispatch } from "../../hooks";
+import { useNavigate } from "react-router-dom";
+import { setUser } from "./userSlice";
 
 
 
@@ -12,6 +15,8 @@ export interface LoginData{
 }
 
 const LoginForm=()=>{
+  const dispatch=useAppDispatch()
+  const navigate=useNavigate()
     const [formData,setFormData]=useState<LoginData>({username:'',password:''})
     const [error,setError]=useState<string | null>(null)
 
@@ -30,7 +35,9 @@ const LoginForm=()=>{
             
           if (response.status=="success"){
             const user=await getUser()
-            console.log(user)
+            dispatch(setUser(user))
+            navigate("/")
+            
           }
             
         } catch (error) {

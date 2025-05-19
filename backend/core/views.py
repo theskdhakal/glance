@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework.parsers import MultiPartParser,FormParser
 from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class RegisterUserView(APIView):
@@ -21,7 +22,7 @@ class RegisterUserView(APIView):
 
         #validate that we have all required fields
         if not username or not email or not password:
-            return Reponse({"error":"Username, email and password are required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error":"Username, email and password are required"}, status=status.HTTP_400_BAD_REQUEST)
 
         #check if user already exist
         if User.objects.filter(username=username).exists():
@@ -34,11 +35,16 @@ class RegisterUserView(APIView):
 
         #create new user
         user=User.objects.create_user(username=username, email=email, password=password)
+        refresh=RefreshToken.for_user(User)
+        tokens={
+            'refresh':str(refresh),
+            'access':str(refresh.access_token)
+        }
 
         #serialize the new created user
-        user_data=UserSerializers(user).data
+        UserSerializers(user).data
 
-        return Response(user_data,status=status.HTTP_201_CREATED)
+        return Response({'message':'User registered Successfully','tokens':tokens},status=status.HTTP_201_CREATED)
 
 
 class ImageListCreate(generics.ListCreateAPIView):
