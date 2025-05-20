@@ -8,7 +8,7 @@ export const Header = () => {
   const {user}=useAppSelector((state)=>state.user)
 
   const handleOnLogout=()=>{
-    dispatch(setUser(""))
+    dispatch(setUser(null))
   }
 
   return (

@@ -1,13 +1,15 @@
-import axios, { type AxiosResponse } from "axios"
+
 import type { RegistrationData } from "../components/RegistrationForm"
 import type { LoginData } from "../components/LoginForm"
 import type { uploadData } from "../page/Upload"
+import axios, { type AxiosResponse } from "axios"
 
 
 const baseURL= "http://127.0.0.1:8000/"
 
 
 const tokenStorage=(response:AxiosResponse)=>{
+
     const {access, refresh}=response.data;
 
   //store the tokens directly in local storage
@@ -19,8 +21,9 @@ const tokenStorage=(response:AxiosResponse)=>{
 
 export const RegistrationHandler=async(obj:RegistrationData)=>{
     try {
+        console.log('user obj :', obj)
         const response=await axios.post(baseURL +"core/register/",obj)
-
+        
        tokenStorage(response)
        return{
         status:'success'
@@ -37,6 +40,7 @@ export const RegistrationHandler=async(obj:RegistrationData)=>{
 export const LoginHandler=async(obj:LoginData)=>{
     try {
         const response=await axios.post(baseURL +"core/token/",obj)
+        
 
         tokenStorage(response)
   

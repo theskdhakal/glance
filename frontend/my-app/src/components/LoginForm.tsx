@@ -32,9 +32,11 @@ const LoginForm=()=>{
 
         try {
            const response=await LoginHandler(formData)
+           console.log(response)
             
           if (response.status=="success"){
             const user=await getUser()
+            console.log(user)
             dispatch(setUser(user))
             navigate("/")
             

@@ -34,8 +34,10 @@ const RegistrationForm=()=>{
 
         try {
             const response=await RegistrationHandler(formData)
+        console.log(response)
             if(response.status=='success'){
-              const user= getUser()
+              const user= await getUser()
+                console.log(user)
               
                           dispatch(setUser(user))
                           navigate("/")

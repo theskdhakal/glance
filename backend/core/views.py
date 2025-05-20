@@ -35,7 +35,7 @@ class RegisterUserView(APIView):
 
         #create new user
         user=User.objects.create_user(username=username, email=email, password=password)
-        refresh=RefreshToken.for_user(User)
+        refresh=RefreshToken.for_user(user)
         tokens={
             'refresh':str(refresh),
             'access':str(refresh.access_token)
@@ -44,7 +44,7 @@ class RegisterUserView(APIView):
         #serialize the new created user
         UserSerializers(user).data
 
-        return Response({'message':'User registered Successfully','tokens':tokens},status=status.HTTP_201_CREATED)
+        return Response({'message':'User registered Successfully', 'refresh':str(refresh), 'access':str(refresh.access_token)},status=status.HTTP_201_CREATED)
 
 
 class ImageListCreate(generics.ListCreateAPIView):
