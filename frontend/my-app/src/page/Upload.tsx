@@ -38,9 +38,14 @@ const Upload = () => {
    try {
 
     const response =await uploadHandler(formData)
+    console.log(response)
     
    } catch (error) {
-    
+      console.error("error while uploading image")
+      return{
+
+        message:error
+      }
    }
   
 

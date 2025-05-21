@@ -76,9 +76,19 @@ export const getUser=async()=>{
 }
 
 
-export const uploadHandler=async(obj:uploadData)=>{
+export const uploadHandler=async(obj:FormData)=>{
     try {
-        const response=await axios.post(baseURL + "images/",obj)
+    const token=localStorage.getItem("access_token")
+
+    if (!token) return null !
+
+        const response=await axios.post(baseURL + "core/images/",obj,{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        })
+
+        console.log(response)
         return response
         
     } catch (error) {
