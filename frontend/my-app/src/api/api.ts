@@ -98,3 +98,18 @@ export const uploadHandler=async(obj:FormData)=>{
         }
     }
 }
+
+export const getImages=async()=>{
+    try {
+
+        const response=await axios.get(baseURL + "core/images/")
+        console.log(response)
+        return response.data
+        
+    } catch (error) {
+        return{
+            status:"error",
+            message:error
+        }
+    }
+}
