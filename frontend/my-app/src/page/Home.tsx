@@ -5,12 +5,12 @@ import { getImages } from '../api/api';
 
 export interface ImageData {
   id: string;
-  image: string;       // URL of image (adjust property name if needed)
-  title: string;       // Title or description of image
-  uploaded_by: {       // To show uploader username
+  image: string;
+  title: string;
+  uploaded_by: {
     username: string;
   };
-  likes: number;       // Number of likes
+  likes: number;
 }
 
 const Home = () => {
@@ -31,39 +31,54 @@ const Home = () => {
 
   return (
     <MainLayout>
-      <div className="max-w-screen-xl mx-auto p-4">
-        <h1 className="text-3xl font-semibold mb-6">Gallery</h1>
+      <div className="w-full min-h-screen flex flex-col items-center overflow-y-auto bg-gray-50">
+        <div className="w-full max-w-md px-4 py-6">
+          <h1 className="text-2xl font-bold text-center mb-6">Your Feed</h1>
 
-        {/* Image Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {images.length > 0 ? (
-            images.map((image) => (
-              <div key={image.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                <img
-                  src={image.image}
-                  alt={image.title || 'Uploaded Image'}
-                  className="w-full h-64 object-cover"
-                />
-                <div className="p-4">
-                  <h2 className="font-semibold text-lg">{image.title || 'Untitled'}</h2>
-                  <p className="text-sm text-gray-600">Uploaded by: {image.uploaded_by.username}</p>
-                  <p className="text-sm text-gray-600 mt-1">Likes: {image.likes}</p>
+          {/* Image Feed */}
+          <div className="flex flex-col gap-6">
+            {images.length > 0 ? (
+              images.map((image) => (
+                <div
+                  key={image.id}
+                  className="bg-white border rounded-lg shadow-md overflow-hidden"
+                >
+                  {/* Uploader info */}
+                  <div className="flex items-center p-4">
+                    <div className="w-10 h-10 rounded-full bg-gray-300 mr-3" />
+                    <p className="font-semibold">{image.uploaded_by.username}</p>
+                  </div>
+
+                  {/* Image */}
+                  <img
+                    src={image.image}
+                    alt={image.title || 'Uploaded'}
+                    className="w-full max-h-[600px] object-cover"
+                  />
+
+                  {/* Caption + Likes */}
+                  <div className="p-4">
+                    <p className="text-sm text-gray-800 font-medium mb-1">
+                      {image.title}
+                    </p>
+                    <button className="text-sm text-gray-500 cursor-pointer">❤️ {image.likes} likes</button>
+                  </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-500">No images available yet!</p>
-          )}
-        </div>
+              ))
+            ) : (
+              <p className="text-center text-gray-500">No images uploaded yet.</p>
+            )}
+          </div>
 
-        {/* Upload Button */}
-        <div className="mt-8">
-          <Link
-            to="/upload"
-            className="inline-block bg-blue-600 text-white font-semibold py-2 px-6 rounded-md hover:bg-blue-700 transition"
-          >
-            Upload Image
-          </Link>
+          {/* Upload Button */}
+          <div className="flex justify-center mt-10">
+            <Link
+              to="/upload"
+              className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600"
+            >
+              + Upload
+            </Link>
+          </div>
         </div>
       </div>
     </MainLayout>
