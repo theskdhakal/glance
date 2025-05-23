@@ -57,7 +57,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS=[
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "http://192.168.1.107:3000"
 ]
 
 ROOT_URLCONF = 'glance.urls'

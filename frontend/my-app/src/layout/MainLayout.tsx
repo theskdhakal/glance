@@ -13,6 +13,8 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
   const handleOnLogout = () => {
     dispatch(setUser(null));
     setIsOpen(false);
+    localStorage.setItem("access_token","");
+    localStorage.setItem("refresh_token","")
   };
 
   return (

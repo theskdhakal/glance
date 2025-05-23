@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from rest_framework.parsers import MultiPartParser,FormParser
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.shortcuts import get_object_or_404
 
 
 class RegisterUserView(APIView):
@@ -55,18 +56,27 @@ class ImageListCreate(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(uploaded_by=self.request.user)
-
+ 
 
 class ToggleLike(APIView):
     permission_classes= [permissions.IsAuthenticated]
 
     def post(self,request,pk):
-        image=Image.objects.get(id=pk)
+        image=get_object_or_404(Image,id=pk)
         like, created= Like.objects.get_or_create(user=request.user, image=image)
         if not created:
             like.delete()
-            return Response({'liked': False})
-        return Response({'liked':True})
+            liked=False
+        else:
+            liked=True
+
+        like_count=image.likes.count()
+
+        return Response({
+            'liked':liked,
+            'like_count':like_count
+        },
+        status=status.HTTP_200_OK)
 
 class LoginUserView(APIView):
     permission_classes=[permissions.IsAuthenticated]

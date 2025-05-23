@@ -1,11 +1,11 @@
 
 import type { RegistrationData } from "../components/RegistrationForm"
 import type { LoginData } from "../components/LoginForm"
-import type { uploadData } from "../page/Upload"
+// import type { uploadData } from "../page/Upload"
 import axios, { type AxiosResponse } from "axios"
 
 
-const baseURL= "http://127.0.0.1:8000/"
+const baseURL= process.env.URL
 
 
 const tokenStorage=(response:AxiosResponse)=>{
@@ -111,5 +111,28 @@ export const getImages=async()=>{
             status:"error",
             message:error
         }
+    }
+}
+
+export const toggleLike=async(imageId:string)=>{
+    try {
+        const token=localStorage.getItem("access_token")
+        console.log(token)
+        if (!token)return null
+
+        const response=await axios.post(baseURL +
+            `core/images/${imageId}/like/`,{},{
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            }
+        )
+        
+
+
+        return response
+        
+    } catch (error) {
+        console.error('Error toggling like',error);
     }
 }

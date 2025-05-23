@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, } from 'react';
 import { MainLayout } from '../layout/MainLayout';
 import { Link } from 'react-router-dom';
-import { getImages } from '../api/api';
+import { getImages, toggleLike } from '../api/api';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setImages, updatedLikeStatus } from '../components/imageSlice';
+
+
 
 export interface ImageData {
   id: string;
@@ -13,14 +17,26 @@ export interface ImageData {
   likes: number;
 }
 
+export interface ImageWithLike extends ImageData {
+  isLiked:boolean
+}
+
 const Home = () => {
-  const [images, setImages] = useState<ImageData[]>([]);
+  // const[images,setImages]=useState<ImageWithLike[]>([])
+  const dispatch=useAppDispatch()
+  const images:ImageWithLike[]=useAppSelector((state)=>state.images.images)
+
+
+
+
+
 
   useEffect(() => {
     const fetchImages = async () => {
       const data = await getImages();
       if (Array.isArray(data)) {
-        setImages(data);
+       const updatedData=data.map(img=>({...img,isLiked:false}))
+       dispatch(setImages(updatedData))
       } else {
         console.error("Error fetching images", data.message);
       }
@@ -29,6 +45,22 @@ const Home = () => {
     fetchImages();
   }, []);
 
+  const handleToggleLike=async(id:string)=>{
+    const response=await toggleLike(id)
+
+    console.log(response)
+    
+    if (response?.status==200 ){
+
+      dispatch(updatedLikeStatus({
+          id:id,
+          isLiked:response.data.liked,
+          likes:response.data.like_count
+      }))
+    }
+  }
+
+  
   return (
     <MainLayout>
       <div className="w-full min-h-screen flex flex-col items-center overflow-y-auto bg-gray-50">
@@ -61,7 +93,11 @@ const Home = () => {
                     <p className="text-sm text-gray-800 font-medium mb-1">
                       {image.title}
                     </p>
-                    <button className="text-sm text-gray-500 cursor-pointer">❤️ {image.likes} likes</button>
+                    <button onClick={() => handleToggleLike(image.id)}>
+  {image.isLiked ? '❤️' : '🤍'} 
+  <p>{image.likes}</p>
+  Like
+</button>
                   </div>
                 </div>
               ))
