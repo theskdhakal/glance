@@ -1,27 +1,32 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
+
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import LoginForm from './components/LoginForm'
 import RegistrationForm from './components/RegistrationForm'
 import Home from './page/Home'
 import Upload from './page/Upload'
+import  { Toaster } from 'react-hot-toast';
+import { PrivateRoute } from './layout/PrivateRoute'
+
 
 
 function App() {
-  // const [count, setCount] = useState(0)
-
   return (
     <>
       <Routes>
+        <Route element={<PrivateRoute/>}>
         <Route path="/" element={<Home/>}/>
         <Route path="/upload" element={<Upload/>}/>
+        </Route>
+
         <Route path="/register" element={<RegistrationForm/>}/>
         <Route path="/login" element={<LoginForm/>}/>
 
+       
       </Routes>
+      <Toaster/>
     </>
+
   )
 }
 

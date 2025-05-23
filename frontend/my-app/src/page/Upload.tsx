@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MainLayout } from "../layout/MainLayout";
 import { uploadHandler } from "../api/api";
-// import { useAppSelector } from "../../hooks";
+import {toast} from "react-hot-toast"
 
 export interface uploadData{
   image:File,
@@ -12,10 +12,7 @@ const Upload = () => {
   const [image, setImage] = useState<File | null>(null);
   const [title, setTitle] = useState("");
 
-  // const{user}=useAppSelector((state)=> state.user)
- 
 
-  // Handle file input change
   const handleImageChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     
    const file=e.target.files?.[0]
@@ -38,7 +35,13 @@ const Upload = () => {
    try {
 
     const response =await uploadHandler(formData)
-    console.log(response)
+   
+    if(response?.status === 201){
+      toast.success("Image uploaded successfully");
+      setImage(null);
+      setTitle("")
+    }
+   
     
    } catch (error) {
       console.error("error while uploading image")

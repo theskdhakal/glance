@@ -3,9 +3,10 @@ import type { RegistrationData } from "../components/RegistrationForm"
 import type { LoginData } from "../components/LoginForm"
 // import type { uploadData } from "../page/Upload"
 import axios, { type AxiosResponse } from "axios"
+import toast from "react-hot-toast"
 
 
-const baseURL= process.env.URL
+const baseURL= import.meta.env.VITE_BACKEND_URL
 
 
 const tokenStorage=(response:AxiosResponse)=>{
@@ -17,11 +18,27 @@ const tokenStorage=(response:AxiosResponse)=>{
   localStorage.setItem("refresh_token",refresh)
 }
 
+const getAuthHeader=():{headers:{Authorization:string}} | null=>{
+     const token= localStorage.getItem("access_token")
+     
+        if (!token) {
+            toast.error("Please sign in")
+            return null
+        }
+
+        return{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        }
+ 
+}
+
 
 
 export const RegistrationHandler=async(obj:RegistrationData)=>{
     try {
-        console.log('user obj :', obj)
+      
         const response=await axios.post(baseURL +"core/register/",obj)
         
        tokenStorage(response)
@@ -56,16 +73,11 @@ export const LoginHandler=async(obj:LoginData)=>{
 }
 
 export const getUser=async()=>{
-    const token=localStorage.getItem("access_token")
-
-    if(!token) return null;
+  const config=getAuthHeader()
+  if(!config ) return null
 
     try {
-        const res= await axios.get(baseURL+'core/login/',{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        })
+        const res= await axios.get(baseURL+'core/login/',config)
 
         return res.data
         
@@ -78,15 +90,10 @@ export const getUser=async()=>{
 
 export const uploadHandler=async(obj:FormData)=>{
     try {
-    const token=localStorage.getItem("access_token")
+    const config=getAuthHeader()
+    if(!config ) return null
 
-    if (!token) return null !
-
-        const response=await axios.post(baseURL + "core/images/",obj,{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        })
+        const response=await axios.post(baseURL + "core/images/",obj,config)
 
         console.log(response)
         return response
@@ -103,7 +110,7 @@ export const getImages=async()=>{
     try {
 
         const response=await axios.get(baseURL + "core/images/")
-        console.log(response)
+    
         return response.data
         
     } catch (error) {
@@ -116,16 +123,12 @@ export const getImages=async()=>{
 
 export const toggleLike=async(imageId:string)=>{
     try {
-        const token=localStorage.getItem("access_token")
-        console.log(token)
-        if (!token)return null
+        
+        const config=getAuthHeader()
+        if(!config ) return null
 
         const response=await axios.post(baseURL +
-            `core/images/${imageId}/like/`,{},{
-                headers:{
-                    Authorization:`Bearer ${token}`
-                }
-            }
+            `core/images/${imageId}/like/`,{},config
         )
         
 
