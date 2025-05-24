@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { getUser, LoginHandler } from "../api/api";
+
 import { MainLayout } from "../layout/MainLayout";
 import { useAppDispatch } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "./UserSlice";
+import { getUser, LoginHandler } from "../api/Api";
 
 export interface LoginData {
   username: string;

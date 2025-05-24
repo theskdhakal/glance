@@ -1,6 +1,6 @@
 'use client'
 import { useState } from "react";
-import { getUser, RegistrationHandler } from "../api/api";
+import { getUser, RegistrationHandler } from "../api/Api";
 import { MainLayout } from "../layout/MainLayout";
 import { useAppDispatch } from "../../hooks";
 import { setUser } from "./UserSlice";

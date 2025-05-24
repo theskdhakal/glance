@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { MainLayout } from '../layout/MainLayout';
 import { Link } from 'react-router-dom';
-import { getImages, toggleLike } from '../api/api';
+import { getImages, toggleLike } from '../api/Api';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setImages, updatedLikeStatus } from '../components/ImageSlice';
 

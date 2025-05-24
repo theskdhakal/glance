@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MainLayout } from "../layout/MainLayout";
-import { uploadHandler } from "../api/api";
+import { uploadHandler } from "../api/Api";
 import {toast} from "react-hot-toast"
 
 export interface uploadData{
