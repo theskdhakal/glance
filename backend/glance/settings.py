@@ -15,17 +15,16 @@ import os
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u4@virsfbybo@a7fkwk9xc^vlrzp(^0*6*gxzsmzbks4%3ct6%'
-
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
    '*'
@@ -58,10 +57,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS=[
-    "http://localhost:3000",
-    "http://192.168.1.107:3000"
-]
+CORS_ALLOW_ALL_ORIGINS=True
+
+# CORS_ALLOWED_ORIGINS=[
+#     "http://localhost:3000",
+#     "http://192.168.1.107:3000"
+# ]
 
 ROOT_URLCONF = 'glance.urls'
 
