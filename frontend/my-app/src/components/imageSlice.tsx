@@ -1,13 +1,21 @@
 import {createSlice} from '@reduxjs/toolkit'
-import type { ImageWithLike } from '../page/Home'
 
 
-// interface Image[]{
-//     id:number;
-//     username:string;
-//     email:string
-// }
 
+
+export interface ImageData {
+  id: string;
+  image: string;
+  title: string;
+  uploaded_by: {
+    username: string;
+  };
+  likes: number;
+}
+
+export interface ImageWithLike extends ImageData {
+  isLiked: boolean;
+}
 interface ImageState {
    images:ImageWithLike[]
 }

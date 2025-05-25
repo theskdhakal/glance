@@ -3,26 +3,13 @@ import { MainLayout } from '../layout/MainLayout';
 import { Link } from 'react-router-dom';
 import { getImages, toggleLike } from '../api/Api';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setImages, updatedLikeStatus } from '../components/ImageSlice';
+import { setImages, updatedLikeStatus, type ImageWithLike } from '../components/ImageSlice';
 
 
-export interface ImageData {
-  id: string;
-  image: string;
-  title: string;
-  uploaded_by: {
-    username: string;
-  };
-  likes: number;
-}
-
-export interface ImageWithLike extends ImageData {
-  isLiked: boolean;
-}
 
 const Home = () => {
   const dispatch = useAppDispatch();
-  const {images} = useAppSelector((state) => state.images);
+  const images:ImageWithLike[] = useAppSelector((state) => state.images.images);
 
   useEffect(() => {
     const fetchImages = async () => {
