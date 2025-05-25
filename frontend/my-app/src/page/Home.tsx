@@ -5,6 +5,7 @@ import { getImages, toggleLike } from '../api/Api';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setImages, updatedLikeStatus } from '../components/ImageSlice';
 
+
 export interface ImageData {
   id: string;
   image: string;
@@ -21,7 +22,7 @@ export interface ImageWithLike extends ImageData {
 
 const Home = () => {
   const dispatch = useAppDispatch();
-  const images: ImageWithLike[] = useAppSelector((state) => state.images.images);
+  const {images} = useAppSelector((state) => state.images);
 
   useEffect(() => {
     const fetchImages = async () => {
