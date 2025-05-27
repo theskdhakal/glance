@@ -1,5 +1,5 @@
 import {configureStore} from '@reduxjs/toolkit'
-import userReducer from "./src/components/UserSlice"
+import userReducer from "./src/components/UserSlice.tsx"
 import imageReducer from "./src/components/ImageSlice.tsx"
 
 
